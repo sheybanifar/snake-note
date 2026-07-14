@@ -7,3 +7,13 @@ class Note(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey('Category',on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=60)
+
+    def __str__(self):
+        return self.name
