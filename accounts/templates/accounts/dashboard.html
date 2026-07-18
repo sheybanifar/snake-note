@@ -1,1 +1,18 @@
-{% extends 'index.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome {{ request.user.username }}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <nav class="navbar bg-danger-subtle d-flex flex-row">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Navbar</span>
+        </div>
+        <div></div>
+    </nav>
+</body>
+</html>

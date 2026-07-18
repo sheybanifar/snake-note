@@ -8,8 +8,14 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 </head>
 <body>
-    <h2>Welcome to Snake note</h2>
-    {% block content %}
-    {% endblock %}
+    {% if not request.user.is_authenticated %}
+    <section class="position-absolute start-50 top-50 translate-middle text-center">
+        <h2>Welcome to Snake note</h2>
+        <a href="" class="btn btn-primary">Sign in</a>
+        <p>If you hav not an account, <a href="">create</a> one.</p>
+    </section>
+    {% else %}
+    
+    {% endif %}
 </body>
 </html>

@@ -22,7 +22,8 @@ from notes import views as notes_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html')),
+    
+    path('', notes_views.index),
 
     path('account/', include('accounts.urls', 'accounts')),
 ]
