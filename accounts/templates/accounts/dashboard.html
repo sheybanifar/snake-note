@@ -10,9 +10,17 @@
 <body>
     <nav class="navbar bg-danger-subtle d-flex flex-row">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Navbar</span>
+            <span class="navbar-brand mb-0 h1">Snake note</span>
+            {% if request.user.is_authenticated %}
+            <div>
+                <span>{{ request.user.username }} /
+                <form action="{% url 'accounts:logout' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="log out">
+                </form>
+            </div>
+            {% endif %}
         </div>
-        <div></div>
     </nav>
 </body>
 </html>
