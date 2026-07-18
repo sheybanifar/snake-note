@@ -13,7 +13,7 @@
             <span class="navbar-brand mb-0 h1">Snake note</span>
             {% if request.user.is_authenticated %}
             <div>
-                <span>{{ request.user.username }} /
+                <span>{{ request.user.username }}</span> /
                 <form action="{% url 'accounts:logout' %}" method="post">
                     {% csrf_token %}
                     <input type="submit" value="log out">
@@ -22,5 +22,6 @@
             {% endif %}
         </div>
     </nav>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
 </body>
 </html>

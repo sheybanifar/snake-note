@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notes.apps.NotesConfig',
-    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +125,5 @@ STATICFILES_DIRS = [
 # Authentication
 
 LOGIN_REDIRECT_URL = 'accounts:dashboard'
+
+LOGOUT_REDIRECT_URL = 'accounts:login'
