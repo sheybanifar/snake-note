@@ -11,7 +11,25 @@
     <nav class="navbar bg-danger-subtle d-flex flex-row">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">Snake note</span>
+            <ul class="navbar-nav d-flex flex-row">
+                <li class="nav-item mx-2">
+                <a class="nav-link" aria-current="page" href="{% url 'accounts:password_change' %}">Change password</a>
+                </li>
+                <li class="nav-item mx-2">
+                <a class="nav-link" href="#">Reset password</a>
+                </li>
+                <li class="nav-item mx-2">
+                <a class="nav-link" href="#">Pricing</a>
+                </li>
+                <li class="nav-item mx-2">
+                <a class="nav-link disabled">Disabled</a>
+                </li>
+            </ul>
+
             {% if request.user.is_authenticated %}
+            {% if request.path != '/account/dashboard/' %}
+            <a href="{% url 'accounts:dashboard' %}">back to dashboard page</a>
+            {% endif %}
             <div>
                 <span>{{ request.user.username }}</span> /
                 <form action="{% url 'accounts:logout' %}" method="post">
@@ -22,6 +40,18 @@
             {% endif %}
         </div>
     </nav>
+    {% if messages %}
+    {% for msg in messages %}
+    <div class="alert alert-{{ msg.level_tag }} alert-dismissible fade show" role="alert">
+	{{ msg }}
+	    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
     <script src="{% static 'js/bootstrap.js' %}"></script>
 </body>
 </html>
