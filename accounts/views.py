@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
+from django.urls import reverse_lazy
 
-class CustomLogoutView(auth_views.LoginView):
+class CustomLogoutView(auth_views.LogoutView):
     def dispatch(self, request, *args, **kwargs):
         message = messages.success(
             request,
@@ -12,8 +13,10 @@ class CustomLogoutView(auth_views.LoginView):
         return super().dispatch(request, *args, **kwargs)
 
 class CustomPasswordChangeView(auth_views.PasswordChangeView):
-    success_url = 'accounts:dashboard'
     
+    success_url = reverse_lazy('accounts:dashboard')
+    
+    # if form was valid, you need to create a message.How?!
     def dispatch(self, request, *args, **kwargs):
         message = messages.success(
             request,
