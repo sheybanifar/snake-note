@@ -16,13 +16,11 @@ class CustomPasswordChangeView(auth_views.PasswordChangeView):
     
     success_url = reverse_lazy('accounts:dashboard')
     
-    # if form was valid, you need to create a message.How?!
-    def dispatch(self, request, *args, **kwargs):
-        message = messages.success(
-            request,
-            'Your password was changed successfully')
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, 'Your password was changed successfully')
         
-        return super().dispatch(request)
+        return response
 
 @login_required
 def dashboard(request):
