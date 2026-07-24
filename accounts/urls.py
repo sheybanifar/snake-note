@@ -16,5 +16,14 @@ urlpatterns = [
         views.CustomPasswordChangeView.as_view(),
         name='password_change'),
 
+    # password reset
+    path(
+        'password_reset/',
+        auth_views.PasswordResetView.as_view(),
+        name='password_reset'),
+    path('password_reset/done/',
+         auth_views.PasswordResetDoneView.as_view(),
+         name='password_reset_done'),
+
     path('dashboard/', views.dashboard, name='dashboard')
 ]
