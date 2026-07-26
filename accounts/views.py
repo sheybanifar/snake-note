@@ -18,8 +18,22 @@ class CustomPasswordChangeView(auth_views.PasswordChangeView):
     
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, 'Your password was changed successfully')
+        messages.success(self.request, 'Your password has been changed successfully')
         
+        return response
+
+class PasswordResetView(auth_views.PasswordResetView):
+    success_url = reverse_lazy('accounts:password_reset_done')
+
+class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(
+            self.request,
+            'Your Password has been reset successfully'
+        )
         return response
 
 @login_required
