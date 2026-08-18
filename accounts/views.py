@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
+from .forms import UserRegisterForm
 
 class CustomLogoutView(auth_views.LogoutView):
     def dispatch(self, request, *args, **kwargs):
@@ -35,6 +38,9 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
             'Your Password has been reset successfully'
         )
         return response
+
+class UserRegister(CreateView):
+    form_class = UserRegisterForm
 
 @login_required
 def dashboard(request):
