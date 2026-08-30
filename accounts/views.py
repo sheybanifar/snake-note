@@ -41,6 +41,7 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 
 class UserRegister(CreateView):
     form_class = UserRegisterForm
+    template_name = 'registration/register.html'
 
 @login_required
 def dashboard(request):

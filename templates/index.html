@@ -8,21 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 </head>
 <body>
-    {% block content %}
-    {% if messages %}
-    {% for msg in messages %}
-    <div class="alert alert-{{ msg.level_tag }} alert-dismissible fade show" role="alert">
-	    {{ msg }}
-	    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %}
-    {% endif %}
     <section class="position-absolute start-50 top-50 translate-middle text-center">
+        {% block content %}
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-{{ msg.level_tag }} alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
         <h2>Welcome to Snake note</h2>
         <a href="{% url 'accounts:login' %}" class="btn btn-primary">Sign in</a>
-        <p>If you have not an account, <a href="">create</a> one.</p>
+        <p>If you have not an account, <a href="{% url 'accounts:register' %}">create</a> one.</p>
+        {% endblock %}
     </section>
-    {% endblock %}
     <script src="{% static 'js/bootstrap.js' %}"></script>
 </body>
 </html>

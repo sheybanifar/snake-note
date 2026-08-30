@@ -2,7 +2,9 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 class UserRegisterForm(forms.ModelForm):
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(
+        widget=forms.PasswordInput,
+        help_text='Confirm your password.')
 
     class Meta:
         model = get_user_model()
