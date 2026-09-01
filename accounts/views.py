@@ -8,6 +8,7 @@ from django.views.generic import CreateView
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.core.mail import EmailMessage
+from django.http import HttpResponseRedirect
 
 from .forms import UserRegisterForm
 
@@ -52,6 +53,7 @@ class UserRegister(CreateView):
         user = form.save(False)
         user.is_active = False
         user.set_password(form.cleaned_data['password'])
+        user.save()
 
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
@@ -81,7 +83,7 @@ class UserRegister(CreateView):
         )
         email.send()
 
-        return super().form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
 def User_register_done(request):
     return render(

@@ -20,9 +20,8 @@ class UserRegisterForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
 
-        password = cleaned_data['password']
-        password2 = cleaned_data['password2']
-
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
         if password2 != password:
             self.add_error(
                 'password2',
