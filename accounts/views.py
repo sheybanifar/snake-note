@@ -43,6 +43,13 @@ class UserRegister(CreateView):
     form_class = UserRegisterForm
     template_name = 'registration/register.html'
 
+    def form_valid(self, form):
+        user = form.save(False)
+        user.is_active = False
+        user.set_password(form.cleaned_data['password'])
+
+        return super().form_valid(form)
+
 @login_required
 def dashboard(request):
     return render(
