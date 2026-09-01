@@ -37,4 +37,9 @@ urlpatterns = [
         views.UserRegister.as_view(),
         name='register'
     ),
+    path(
+        'activate/<uid>/<token>/',
+        views.UserActivate,
+        name='user_activate'
+    ),
 ]
