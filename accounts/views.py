@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.core.mail import EmailMessage
@@ -44,10 +44,10 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
         )
         return response
 
-class UserRegister(CreateView):
+class UserRegisterView(CreateView):
     form_class = UserRegisterForm
     template_name = 'registration/register.html'
-    success_url = 'done/'
+    success_url = reverse_lazy('accounts:user_register_done')
 
     def form_valid(self, form):
         user = form.save(False)
@@ -85,11 +85,8 @@ class UserRegister(CreateView):
 
         return HttpResponseRedirect(self.get_success_url())
 
-def User_register_done(request):
-    return render(
-        request,
-        'registration/register_done.html'
-    )
+class UserRegisterDoneView(TemplateView):
+    template_name = 'registration/register_done.html'
 
 def user_activate(request, uid, token):
     pass

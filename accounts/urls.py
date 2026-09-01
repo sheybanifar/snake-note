@@ -34,12 +34,12 @@ urlpatterns = [
     # Register account
     path(
         'register/',
-        views.UserRegister.as_view(),
+        views.UserRegisterView.as_view(),
         name='register'
     ),
     path(
         'register/done/',
-        views.User_register_done,
+        views.UserRegisterDoneView.as_view(),
         name='user_register_done'
     ),
     path(
