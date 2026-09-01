@@ -65,12 +65,20 @@ class UserRegister(CreateView):
 
         activation_url = self.request.build_absolute_uri(activation_path)
 
-        email_body = 
+        email_body = f'''Hi{user.username},
+        To activate your account click on the link below:
+
+        {activation_url}
+
+        powered by Snake note
+        '''
 
         email = EmailMessage(
             subject='Account activation',
-            body=
+            body=email_body,
+            to=[user.email]
         )
+        email.send()
 
         return super().form_valid(form)
 

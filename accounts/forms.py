@@ -26,4 +26,4 @@ class UserRegisterForm(forms.ModelForm):
         if password2 != password:
             self.add_error(
                 'password2',
-                'password do not match.')
+                'password does not match.')
