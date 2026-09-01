@@ -38,6 +38,11 @@ urlpatterns = [
         name='register'
     ),
     path(
+        'register/done/',
+        views.User_register_done,
+        name='user_register_done'
+    ),
+    path(
         'activate/<uid>/<token>/',
         views.UserActivate,
         name='user_activate'

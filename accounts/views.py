@@ -46,6 +46,7 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 class UserRegister(CreateView):
     form_class = UserRegisterForm
     template_name = 'registration/register.html'
+    success_url = 'user_register_done'
 
     def form_valid(self, form):
         user = form.save(False)
@@ -81,6 +82,12 @@ class UserRegister(CreateView):
         email.send()
 
         return super().form_valid(form)
+
+def User_register_done(request):
+    return render(
+        request,
+        'registration/register_done.html'
+    )
 
 def UserActivate(request, uid, token):
     pass
