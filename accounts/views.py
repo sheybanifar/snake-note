@@ -46,18 +46,18 @@ class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
 class UserRegister(CreateView):
     form_class = UserRegisterForm
     template_name = 'registration/register.html'
-    success_url = 'user_register_done'
+    success_url = 'done/'
 
     def form_valid(self, form):
         user = form.save(False)
         user.is_active = False
         user.set_password(form.cleaned_data['password'])
 
-        token = default_token_generator(user)
-        uid = urlsafe_base64_encode(user.pk)
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
 
         activation_path = reverse(
-            'accounts:user-activate',
+            'accounts:user_activate',
             kwargs={
                 'uid':uid,
                 'token': token
@@ -66,7 +66,7 @@ class UserRegister(CreateView):
 
         activation_url = self.request.build_absolute_uri(activation_path)
 
-        email_body = f'''Hi{user.username},
+        email_body = f'''Hi {user.username},
         To activate your account click on the link below:
 
         {activation_url}
@@ -89,7 +89,7 @@ def User_register_done(request):
         'registration/register_done.html'
     )
 
-def UserActivate(request, uid, token):
+def user_activate(request, uid, token):
     pass
 
 @login_required
