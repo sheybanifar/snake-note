@@ -27,6 +27,6 @@ urlpatterns = [
     
     path('', notes_views.index, name='home'),
 
-    path('account/', include('accounts.urls', 'accounts')),
+    path('account/', include('accounts.urls')),
 ] + static(settings.MEDIA_URL
            , document_root=settings.MEDIA_ROOT)
