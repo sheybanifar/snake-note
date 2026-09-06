@@ -44,7 +44,7 @@ urlpatterns = [
     ),
     path(
         'activate/<uid>/<token>/',
-        views.user_activate,
+        views.UserActivateView.as_view(),
         name='user_activate'
     ),
 ]

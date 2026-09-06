@@ -88,9 +88,24 @@ class UserRegisterView(CreateView):
 class UserRegisterDoneView(TemplateView):
     template_name = 'registration/register_done.html'
 
-def user_activate(request, uid, token):
-    pass
+class UserActivateView(View):
+    def get(self, request, uid, token):
+        user_id = urlsafe_base64_decode(uid).decode()
+        try:
+            user = get_user_model().objects.get(user_id)
+        except get_user_model().DoesNotExist:
+            pass
 
+        if default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            messages.success(
+                self.request,
+                'Your account is activated. Now log in using your credentials.'
+            )
+            return HttpResponseRedirect('accounts:login')
+        else:
+            pass
 @login_required
 def dashboard(request):
     return render(
