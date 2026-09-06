@@ -97,7 +97,7 @@ class UserActivateView(View):
             User = get_user_model()
             user_id = urlsafe_base64_decode(uid).decode()
             user = User.objects.get(pk=user_id)
-        except Exception as e:
+        except Exception:
             messages.error(
                 request,
                 'Account activation failed. Invalid data'

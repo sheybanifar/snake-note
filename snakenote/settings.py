@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 
+from django.contrib import messages
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -140,3 +142,9 @@ DEFAULT_FROM_EMAIL = 'info@snakenote.com'
 MEDIA_ROOT = 'media/'
 
 MEDIA_URL = 'media/'
+
+# Message framework
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
