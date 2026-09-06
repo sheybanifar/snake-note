@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import CreateView, TemplateView
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 
@@ -50,7 +52,8 @@ class UserRegisterView(CreateView):
     success_url = reverse_lazy('accounts:user_register_done')
 
     def form_valid(self, form):
-        user = form.save(False)
+        self.object = form.save(False)
+        user = self.object
         user.is_active = False
         user.set_password(form.cleaned_data['password'])
         user.save()
@@ -90,22 +93,32 @@ class UserRegisterDoneView(TemplateView):
 
 class UserActivateView(View):
     def get(self, request, uid, token):
-        user_id = urlsafe_base64_decode(uid).decode()
         try:
-            user = get_user_model().objects.get(user_id)
-        except get_user_model().DoesNotExist:
-            pass
-
-        if default_token_generator.check_token(user, token):
-            user.is_active = True
-            user.save()
-            messages.success(
-                self.request,
-                'Your account is activated. Now log in using your credentials.'
+            User = get_user_model()
+            user_id = urlsafe_base64_decode(uid).decode()
+            user = User.objects.get(pk=user_id)
+        except Exception as e:
+            messages.error(
+                request,
+                'Account activation failed. Invalid data'
             )
-            return HttpResponseRedirect('accounts:login')
-        else:
-            pass
+            return redirect('home')
+
+        if not default_token_generator.check_token(user, token):
+            messages.error(
+                request,
+                'Account activation failed. Invalid token or has expired.'
+            )
+            return redirect('home')
+        
+        user.is_active = True
+        user.save()
+        messages.success(
+            request,
+            'Account is activated. You can now log in.'
+        )
+        return redirect('accounts:login')
+            
 @login_required
 def dashboard(request):
     return render(
