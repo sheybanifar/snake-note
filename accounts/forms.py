@@ -10,6 +10,10 @@ class UserRegisterForm(forms.ModelForm):
         model = get_user_model()
         fields = ['username', 'password', 'email']
 
+        widgets = {
+            'password': forms.PasswordInput
+        }
+
     field_order = [
         'username',
         'password',
