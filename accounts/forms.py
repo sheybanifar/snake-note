@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
 class UserRegisterForm(forms.ModelForm):
     password2 = forms.CharField(
@@ -11,7 +12,8 @@ class UserRegisterForm(forms.ModelForm):
         fields = ['username', 'password', 'email']
 
         widgets = {
-            'password': forms.PasswordInput
+            'password': forms.PasswordInput,
+            'email': forms.EmailInput({'required': True})
         }
 
     field_order = [
@@ -20,6 +22,16 @@ class UserRegisterForm(forms.ModelForm):
         'password2',
         'email'
     ]
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        if get_user_model().objects.filter(email=email).exists():
+            raise ValidationError(
+                'This email already is taken. try another.'
+            )
+
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
