@@ -8,12 +8,13 @@
   * \[DONE] change password
   * \[DONE] sending email
   * \[DONE] reset password
+  * login using email
 
 
 
 * ###### user registration
 
-  * Email verification
-  * Avoid inserting repetitive email
+  * \[DONE] Email verification
+  * \[DONE] Avoid inserting repetitive email
   * Rate limiting
 
