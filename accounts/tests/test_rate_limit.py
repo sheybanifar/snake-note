@@ -54,5 +54,28 @@ class BucketRateLimitTests(TestCase):
         self.assertEqual(bucket1, 10)
         self.assertEqual(bucket2, 11)
 
+
+    def test_requests_are_allowed_until_limit(self):
+        self.assertTrue(self.limiter.allow(self.client_id))
+        self.assertTrue(self.limiter.allow(self.client_id))
+        self.assertTrue(self.limiter.allow(self.client_id))
+
+        self.assertFalse(self.limiter.allow(self.client_id))
+
+    @patch('accounts.rate_limit.time.time')
+    def test_new_bucket_new_cache_key(self, mock_time):
+        mock_time.return_value = 100
+
+        _, bucket_before = self.limiter._get_bucket()
+        key_before = self.limiter._make_key(self.client_id, bucket_before)
+
+        mock_time.return_value = 110
+
+        _, bucket_after = self.limiter._get_bucket()
+        key_after = self.limiter._make_key(self.client_id, bucket_after)
+
+        self.assertNotEqual(bucket_before, bucket_after)
+        self.assertNotEqual(key_before, key_after)
+
     def tearDown(self):
         cache.clear()
