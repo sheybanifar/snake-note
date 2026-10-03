@@ -38,6 +38,14 @@ class BucketRateLimitTests(TestCase):
     @patch('accounts.rate_limit.time.time')
     def test_bucket_calculation_correctness(self, mock_time):
         mock_time.return_value = 100
+        now, bucket = self.limiter._get_bucket()
+
+        self.assertEqual(now, 100),
+        self.assertEqual(bucket, 10)
+
+    @patch('accounts.rate_limit.time.time')
+    def test_bucket_changes_at_boundary(self, mock_time):
+        mock_time.return_value = 100
         bucket1 = self.limiter._get_bucket()[1]
 
         mock_time.return_value = 110
