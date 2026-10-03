@@ -1,7 +1,11 @@
 from django.test import TestCase
 from django.core.cache import cache
 
-from accounts.rate_limit import TTLRateLimit
+from unittest.mock import patch
+
+from accounts.rate_limit import TTLRateLimit, BucketRateLimit
+
+# This class is used to test behaviors of "TTL rate limiter"
 
 class TTLRateLimitTests(TestCase):
     def setUp(self):
@@ -20,6 +24,27 @@ class TTLRateLimitTests(TestCase):
         key = self.limiter._make_key(self.client_id)
 
         self.assertEqual(cache.get(key), 4)
+
+    def tearDown(self):
+        cache.clear()
+
+# This class is used to test behaviors of "Bucket rate limiter"
+
+class BucketRateLimitTests(TestCase):
+    def setUp(self):
+        self.limiter = BucketRateLimit('test', 3, 10)
+        self.client_id = 'client-1'
+
+    @patch('accounts.rate_limit.time.time')
+    def test_bucket_calculation_correctness(self, mock_time):
+        mock_time.return_value = 100
+        bucket1 = self.limiter._get_bucket()[1]
+
+        mock_time.return_value = 110
+        bucket2 = self.limiter._get_bucket()[1]
+
+        self.assertEqual(bucket1, 10)
+        self.assertEqual(bucket2, 11)
 
     def tearDown(self):
         cache.clear()
