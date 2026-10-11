@@ -13,6 +13,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 
 from .forms import UserRegisterForm
+from .models import Profile
 
 class CustomLogoutView(auth_views.LogoutView):
     def dispatch(self, request, *args, **kwargs):
@@ -57,6 +58,9 @@ class UserRegisterView(CreateView):
         user.is_active = False
         user.set_password(form.cleaned_data['password'])
         user.save()
+
+        # create profile
+        Profile.objects.create(user=user)
 
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
