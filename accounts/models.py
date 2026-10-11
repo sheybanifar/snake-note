@@ -8,10 +8,10 @@ class Profile(models.Model):
         related_name='profile'
     )
 
-    date_of_birth = models.DateField(blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(
         upload_to='profiles-photo/',
-        blank=True
+        blank=True,
     )
 
     def __str__(self):
