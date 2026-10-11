@@ -6,13 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, ProfileForm
 from .models import Profile
 
 class CustomLogoutView(auth_views.LogoutView):
@@ -129,3 +129,12 @@ def dashboard(request):
         request,
         'accounts/dashboard.html',
     )
+
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    form_class = ProfileForm
+    template_name = 'accounts/profile_edit.html'
+    success_url = reverse_lazy('accounts:profile_edit')
+
+    def get_object(self, queryset = None):
+        return self.request.user.profile
