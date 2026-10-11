@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
+from .models import Profile
+
 class UserRegisterForm(forms.ModelForm):
     password2 = forms.CharField(
         widget=forms.PasswordInput,
@@ -42,3 +44,7 @@ class UserRegisterForm(forms.ModelForm):
             self.add_error(
                 'password2',
                 'password does not match.')
+
+class ProfileForm(forms.ModelForm):
+    model = Profile
+    fields = ['photo', 'date_of_birth']
