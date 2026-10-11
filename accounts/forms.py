@@ -46,5 +46,6 @@ class UserRegisterForm(forms.ModelForm):
                 'password does not match.')
 
 class ProfileForm(forms.ModelForm):
-    model = Profile
-    fields = ['photo', 'date_of_birth']
+    class Meta:
+        model = Profile
+        fields = ['photo', 'date_of_birth']
