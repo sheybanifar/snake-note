@@ -1,0 +1,13 @@
+{% extends 'accounts/dashboard.html' %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block content %}
+<h2>Edit your profile info</h2>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}
