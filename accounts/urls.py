@@ -28,8 +28,13 @@ urlpatterns = [
          views.PasswordResetConfirmView.as_view(),
          name='password_reset_confirm'),
 
-    # Dashboard
+    # Dashboard & Profile
     path('dashboard/', views.dashboard, name='dashboard'),
+    path(
+        'profile/edit/',
+        views.ProfileUpdateView.as_view(),
+        name='profile_edit'
+    ),
 
     # Register account
     path(
