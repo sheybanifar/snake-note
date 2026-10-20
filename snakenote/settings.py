@@ -141,9 +141,9 @@ DEFAULT_FROM_EMAIL = 'info@snakenote.com'
 
 # Media
 
-MEDIA_ROOT = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 
 # Message framework
 
