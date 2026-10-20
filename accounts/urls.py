@@ -31,9 +31,9 @@ urlpatterns = [
     # Dashboard & Profile
     path('dashboard/', views.dashboard, name='dashboard'),
     path(
-        'profile/edit/',
+        'edit/',
         views.ProfileUpdateView.as_view(),
-        name='profile_edit'
+        name='edit'
     ),
 
     # Register account
