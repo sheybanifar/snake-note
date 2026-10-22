@@ -155,6 +155,13 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         if (self.old_photo_name and self.old_photo_name != new_photo_name):
             self.photo_storage.delete(self.old_photo_name)
 
+        messages.success(
+            self.request,
+            'Your profile has been updated successfully'
+        )
+
         return response
-        
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)
         
