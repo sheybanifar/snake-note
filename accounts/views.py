@@ -140,16 +140,20 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return self.request.user.profile
 
-    def form_valid(self, form):
-        old_photo_name = self.object.photo.name
-        storage = self.object.photo.storage
+    def post(self, request, *args, **kwargs):
+        profile = self.get_object()
+        self.old_photo_name = profile.photo.name
+        self.photo_storage = profile.photo.storage
 
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
         response = super().form_valid(form)
 
         new_photo_name = self.object.photo.name
         
-        if old_photo_name and old_photo_name != new_photo_name:
-            storage.delete(old_photo_name)
+        if (self.old_photo_name and self.old_photo_name != new_photo_name):
+            self.photo_storage.delete(self.old_photo_name)
 
         return response
         
