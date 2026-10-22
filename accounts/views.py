@@ -163,5 +163,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return response
 
     def form_invalid(self, form):
+        messages.error(self.request, 'Please correct the errors below')
+        
         return super().form_invalid(form)
         
