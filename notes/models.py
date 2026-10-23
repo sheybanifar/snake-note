@@ -37,9 +37,10 @@ class Category(models.Model):
     )
 
     class Meta:
-        contraints = [
+        constraints = [
             models.UniqueConstraint(
                 fields=['user', 'slug'],
+                name='unique_category_slug_per_user'
             )
         ]
 
