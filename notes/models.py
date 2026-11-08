@@ -1,5 +1,21 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
+
+class NoteQuerySet(models.QuerySet):
+    def for_user(self, user):
+        return self.filter(owner=user)
+
+    def in_category(self, category_slug):
+        return self.filter(category__slug=category_slug)
+
+    def search(self, query):
+        if not query:
+            return self.none()
+        
+        return self.filter(Q(title__icontains=query) | Q(body__icontains=query))
+
+NoteManager = models.Manager.from_queryset(NoteQuerySet)
 
 class Note(models.Model):
     owner = models.ForeignKey(
@@ -16,6 +32,8 @@ class Note(models.Model):
         'Category',
         on_delete=models.PROTECT,
         related_name='notes')
+
+    note_manager = NoteManager()
 
     class Meta:
         constraints = [
