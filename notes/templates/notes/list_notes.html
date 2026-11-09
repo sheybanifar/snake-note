@@ -1,0 +1,94 @@
+{% extends "notes/dashboard.html" %}
+
+{% block title %}My Notes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- بخش Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold text-primary">My Notes</h1>
+        <a href="{% url 'note_create' %}" class="btn btn-success shadow-sm">
+            <i class="bi bi-plus-lg"></i> Create New Note
+        </a>
+    </div>
+
+    <!-- بخش جستجو (اختیاری - برای هماهنگی با قابلیت جستجوی که نوشتیم) -->
+    <form method="GET" action="" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search your notes..." aria-label="Search">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="row">
+        {% if notes %}
+            {% for note in notes %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <!-- استفاده از Card بوت‌استرپ برای هر یادداشت -->
+                    <div class="card h-100 shadow-sm hover-shadow">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-dark">
+                                <a href="{% url 'note_detail' note.slug %}" class="text-decoration-none text-dark">
+                                    {{ note.title }}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted text-truncate" style="max-height: 3rem;">
+                                {{ note.body|striptags|truncatechars:100 }}
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 text-muted small">
+                            {{ note.created_at|date:"M d, Y" }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- حالت زمانی که یادداشتی وجود ندارد -->
+            <div class="col-12">
+                <div class="alert alert-info text-center shadow-sm" role="alert">
+                    <h4 class="alert-heading">No notes found!</h4>
+                    <p>It looks like you haven't written anything yet. Why not start now?</p>
+                    <hr>
+                    <a href="{% url 'note_create' %}" class="btn btn-outline-info">Create your first note</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- بخش صفحه‌بندی (Pagination) با استایل Bootstrap -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+            {% endif %}
+
+            <li class="page-item active">
+                <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+
+<style>
+    /* یک افکت کوچک برای زیباتر شدن کارت‌ها هنگام هاور */
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    }
+</style>
+{% endblock %}
