@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import CreateView, ListView
 
 from .models import Note
 
@@ -17,3 +17,12 @@ class NoteListView(ListView):
 
     def get_queryset(self):
         return self.model.note_manager.for_user(self.request)
+
+class NoteCreateView(CreateView):
+    model = Note
+    fields = ['title', 'body', 'category']
+    template_name = 'notes/create_note.html'
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
