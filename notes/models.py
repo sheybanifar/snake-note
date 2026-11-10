@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
+from django.utils.text import slugify
+
+import uuid
 
 class NoteQuerySet(models.QuerySet):
     def for_user(self, user):
@@ -32,6 +35,14 @@ class Note(models.Model):
         'Category',
         on_delete=models.PROTECT,
         related_name='notes')
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug_id = uuid.uuid4().hex[:6]
+            self.slug = f'{base_slug}-{slug_id}'
+
+        return super().save(*args, **kwargs)
 
     note_manager = NoteManager()
 
