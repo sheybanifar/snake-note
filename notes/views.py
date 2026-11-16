@@ -22,9 +22,14 @@ class NoteListView(LoginRequiredMixin, ListView):
 
 class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
-    fields = ['title', 'body', 'category']
     template_name = 'notes/create_note.html'
     success_url = reverse('notes:note_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request
+
+        return kwargs
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
