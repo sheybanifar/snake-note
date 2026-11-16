@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from .models import Note
+from .forms import NoteCreateForm
 
 def index(request):
     if not request.user.is_authenticated:
@@ -22,8 +23,9 @@ class NoteListView(LoginRequiredMixin, ListView):
 
 class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
+    form_class = NoteCreateForm
     template_name = 'notes/create_note.html'
-    success_url = reverse('notes:note_list')
+    success_url = reverse_lazy('notes:note_list')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
