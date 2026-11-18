@@ -1,6 +1,6 @@
-{% extends "notes/dashboard.html" %}
+{% extends "accounts/dashboard.html" %}
 
-{% block title %}Create Note{% endblock %}
+{% block title %}Create note{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -30,7 +30,11 @@
 
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success">Save note</button>
+<<<<<<< HEAD
                         <a href="{% url 'notes:index' %}" class="btn btn-light">Discard</a>
+=======
+                        <a href="{% url 'accounts:dashboard' %}" class="btn btn-light">Discard</a>
+>>>>>>> d3ef5dbb2dfc2ecac6fbc288b180f963fbb2bdb6
                     </div>
                 </form>
             </div>

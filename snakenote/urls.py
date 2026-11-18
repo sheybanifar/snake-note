@@ -28,6 +28,6 @@ urlpatterns = [
     path('', notes_views.index, name='home'),
 
     path('account/', include('accounts.urls')),
-    path('note/', include('notes.urls'))
+    path('notes/', include('notes.urls')),
 ] + static(settings.MEDIA_URL
            , document_root=settings.MEDIA_ROOT)
