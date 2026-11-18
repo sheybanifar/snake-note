@@ -1,4 +1,4 @@
-{% extends "notes/dashboard.html" %}
+{% extends "accounts/dashboard.html" %}
 
 {% block title %}My Notes{% endblock %}
 
@@ -7,7 +7,7 @@
     <!-- بخش Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="display-5 fw-bold text-primary">My Notes</h1>
-        <a href="{% url 'note_create' %}" class="btn btn-success shadow-sm">
+        <a href="{% url 'notes:note_create' %}" class="btn btn-success shadow-sm">
             <i class="bi bi-plus-lg"></i> Create New Note
         </a>
     </div>
@@ -28,7 +28,7 @@
                     <div class="card h-100 shadow-sm hover-shadow">
                         <div class="card-body">
                             <h5 class="card-title fw-bold text-dark">
-                                <a href="{% url 'note_detail' note.slug %}" class="text-decoration-none text-dark">
+                                <a href="" class="text-decoration-none text-dark">
                                     {{ note.title }}
                                 </a>
                             </h5>
@@ -49,7 +49,7 @@
                     <h4 class="alert-heading">No notes found!</h4>
                     <p>It looks like you haven't written anything yet. Why not start now?</p>
                     <hr>
-                    <a href="{% url 'note_create' %}" class="btn btn-outline-info">Create your first note</a>
+                    <a href="{% url 'notes:note_create' %}" class="btn btn-outline-info">Create your first note</a>
                 </div>
             </div>
         {% endif %}

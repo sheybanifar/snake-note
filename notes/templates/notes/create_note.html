@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends "accounts/dashboard.html" %}
 
 {% block title %}Create note{% endblock %}
 
@@ -30,7 +30,7 @@
 
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-success">Save note</button>
-                        <a href="{% url 'notes:index' %}" class="btn btn-light">Discard</a>
+                        <a href="{% url 'accounts:dashboard' %}" class="btn btn-light">Discard</a>
                     </div>
                 </form>
             </div>

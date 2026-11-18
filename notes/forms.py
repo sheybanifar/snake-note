@@ -19,8 +19,8 @@ class NoteCreateForm(forms.ModelForm):
         fields = ['title', 'body']
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
         self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
 
         if self.user:
             self.fields['existing_category'].queryset = Category.objects.filter(user=self.user)
