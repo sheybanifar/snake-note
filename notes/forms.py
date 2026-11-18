@@ -32,7 +32,7 @@ class NoteCreateForm(forms.ModelForm):
         new_category = self.cleaned_data.get('new_category')
 
         if not existing and not new_category:
-            forms.ValidationError(
+            raise forms.ValidationError(
                 'Error! You should select a category, or create one!'
             )
 
@@ -50,7 +50,7 @@ class NoteCreateForm(forms.ModelForm):
         if isinstance(cd_category, Category):
             instance.category = cd_category
         else:
-            instance.category = Category.objects.create(
+            instance.category = Category(
                 name=cd_category, user=self.user
             )
 
