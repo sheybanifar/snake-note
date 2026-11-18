@@ -19,7 +19,7 @@ class NoteListView(LoginRequiredMixin, ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        return self.model.note_manager.for_user(self.request)
+        return self.model.note_manager.for_user(self.request.user)
 
 class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
@@ -29,7 +29,7 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request
+        kwargs['user'] = self.request.user
 
         return kwargs
 
