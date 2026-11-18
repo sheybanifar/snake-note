@@ -50,7 +50,7 @@ class NoteCreateForm(forms.ModelForm):
         if isinstance(cd_category, Category):
             instance.category = cd_category
         else:
-            instance.category = Category(
+            instance.category = Category.objects.create(
                 name=cd_category, user=self.user
             )
 
