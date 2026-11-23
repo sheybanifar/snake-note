@@ -38,4 +38,10 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class NoteDetailView(LoginRequiredMixin, DetailView):
-    pass
+    model = Note
+
+    def get_queryset(self):
+        return self.model.note_manager.for_user(owner=self.request.user)
+
+    def get_object(self):
+        return self.queryset.get(slug=self)
