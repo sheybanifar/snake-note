@@ -42,6 +42,3 @@ class NoteDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return self.model.note_manager.for_user(owner=self.request.user)
-
-    def get_object(self):
-        return self.queryset.get(slug=self.kwargs['slug'])
