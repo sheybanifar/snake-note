@@ -7,4 +7,5 @@ app_name = 'notes'
 urlpatterns = [
     path('', views.NoteListView.as_view(), name='note_list'),
     path('create/', views.NoteCreateView.as_view(), name='note_create'),
+    path('<slug:slug>/', views.NoteDetailView.as_view(), name='note_detail'),
 ]

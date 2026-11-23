@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.utils.text import slugify
+from django.urls import reverse
 
 import uuid
 
@@ -55,6 +56,9 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('notes:note_detail', kwargs={'slug': self.slug})
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
