@@ -1,0 +1,65 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block title %}{{ note.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+
+            <!-- Navigation -->
+            <div class="mb-3">
+                <a href="{% url 'notes:note_list' %}" class="btn btn-outline-secondary btn-sm">
+                    &larr; Back to notes
+                </a>
+            </div>
+
+            <!-- Note content -->
+            <article class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <!-- Title -->
+                    <h1 class="h3 fw-bold mb-3">{{ note.title }}</h1>
+
+                    <!-- Metadata -->
+                    <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+                        <span class="badge bg-primary">
+                            {{ note.category.name }}
+                        </span>
+
+                        <span class="text-muted small">
+                            Created: {{ note.created_at|date:"M d, Y - H:i" }}
+                        </span>
+                    </div>
+
+                    {% if note.updated_at != note.created_at %}
+                    <p class="text-muted small mb-3">
+                        Last updated: {{ note.updated_at|date:"M d, Y - H:i" }}
+                    </p>
+                    {% endif %}
+
+                    <hr>
+
+                    <!-- Body -->
+                    <div class="note-content lh-lg">
+                        {{ note.body|linebreaks }}
+                    </div>
+
+                </div>
+            </article>
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <a href="{% url 'notes:note_list' %}" class="btn btn-outline-secondary">
+                    All notes
+                </a>
+
+                <a href="{% url 'notes:note_create' %}" class="btn btn-success">
+                    + Create new note
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

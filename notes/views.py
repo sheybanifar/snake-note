@@ -39,6 +39,7 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
 class NoteDetailView(LoginRequiredMixin, DetailView):
     model = Note
+    template_name = 'notes/note_detail.html'
 
     def get_queryset(self):
-        return self.model.note_manager.for_user(owner=self.request.user)
+        return self.model.note_manager.for_user(user=self.request.user)
