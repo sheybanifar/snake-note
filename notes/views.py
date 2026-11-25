@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 
@@ -43,3 +43,6 @@ class NoteDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return self.model.note_manager.for_user(user=self.request.user)
+
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
+    pass

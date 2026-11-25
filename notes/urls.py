@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.NoteListView.as_view(), name='note_list'),
     path('create/', views.NoteCreateView.as_view(), name='note_create'),
     path('<slug:slug>/', views.NoteDetailView.as_view(), name='note_detail'),
+    path('<slug:slug>/edit/', views.NoteUpdateView.as_view(), name='note_update')
 ]

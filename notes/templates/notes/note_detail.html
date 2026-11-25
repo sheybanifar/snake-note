@@ -54,9 +54,15 @@
                     All notes
                 </a>
 
-                <a href="{% url 'notes:note_create' %}" class="btn btn-success">
-                    + Create new note
-                </a>
+                <div class="d-flex gap-2">
+                    <a href="{{ note.get_absolute_url }}edit/" class="btn btn-primary">
+                        Edit note
+                    </a>
+
+                    <a href="{% url 'notes:note_create' %}" class="btn btn-success">
+                        + Create new note
+                    </a>
+                </div>
             </div>
 
         </div>

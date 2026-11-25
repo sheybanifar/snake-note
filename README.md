@@ -18,3 +18,11 @@
   * \[DONE] Avoid inserting repetitive email
   * Rate limiting
 
+
+
+##### Bugs
+
+
+
+  * In save() method of NoteCreateView, new category object may be saved in database without considering "if commit == True". Saving multiple related object should be reviewed.
+
